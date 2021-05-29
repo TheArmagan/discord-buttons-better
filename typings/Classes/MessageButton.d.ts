@@ -1,4 +1,15 @@
 export = MessageButton;
+
+interface ButtonDefaultEmoji {
+    name: string;
+}
+
+interface ButtonGuildEmoji {
+    id: string;
+    animated: boolean;
+}
+
+
 declare class MessageButton {
     constructor(data?: {});
     setup(data: object): MessageButton;
@@ -13,6 +24,7 @@ declare class MessageButton {
     setDisabled(boolean: boolean): MessageButton;
     setURL(url: string): MessageButton;
     setID(id: string): MessageButton;
+    setEmoji(emoji: ButtonDefaultEmoji | ButtonGuildEmoji | string): MessageButton;
     toJSON(): {
         type: number;
         style: string;

@@ -55,9 +55,9 @@ class MessageButton {
     }
 
     setEmoji(emoji) {
-        if (isEmoji(resolveString(emoji)) === true) this.emoji = { name: resolveString(emoji) }
-        else if (emoji.id) this.emoji = { id: emoji.id }
-        else if (resolveString(emoji).length > 0) this.emoji = { id: resolveString(emoji) }
+        if (isEmoji(resolveString(emoji)) == true) this.emoji = { name: resolveString(emoji) }
+        else if (emoji.id) this.emoji = { id: emoji.id, animated: "animated" in emoji ? emoji.animated : false }
+        else if (resolveString(emoji).length > 0) this.emoji = { id: resolveString(emoji), animated: "animated" in emoji ? emoji.animated : false }
         else this.emoji = { name: null, id: null };
         return this;
     }
