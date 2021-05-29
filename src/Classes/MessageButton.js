@@ -7,20 +7,23 @@ class MessageButton {
         this.setup(data);
     }
 
-    setup(data) {
+    setup(data={}) {
 
-        if(data.style && data.style == 'gray') data.style = 'grey';
-        this.style = 'style' in data ? resolveStyle(resolveString(data.style)) : null;
+        if (data?.style == "gray") data.style = "grey";
+        
+        this.style = 'style' in data ? resolveStyle(resolveString(data.style)) : 1;
 
         this.label = 'label' in data ? resolveString(data.label) : null;
 
         this.disabled = 'disabled' in data ? Boolean(data.disabled) : false;
 
-        if (this.style === 5) {
+        if (this.style == 5) {
             this.url = 'url' in data ? resolveString(data.url) : null;
         } else {
-            this.custom_id = 'id' in data ? resolveString(data.id): null;
+            this.custom_id = 'id' in data ? resolveString(data.id): `dbb${Date.now()}`;
         }
+
+        this.setEmoji(data.emoji);
 
         this.type = 2;
 
@@ -55,10 +58,16 @@ class MessageButton {
     }
 
     setEmoji(emoji) {
-        if (isEmoji(resolveString(emoji)) == true) this.emoji = { name: resolveString(emoji) }
-        else if (emoji.id) this.emoji = { id: emoji.id, animated: "animated" in emoji ? emoji.animated : false }
-        else if (resolveString(emoji).length > 0) this.emoji = { id: resolveString(emoji), animated: "animated" in emoji ? emoji.animated : false }
-        else this.emoji = { name: null, id: null };
+        if (typeof emoji == "object") {
+            if ("id" in emoji) {
+                this.emoji = { id: emoji.id, animated: "animated" in emoji ? emoji.animated : false };
+            } else if ("name" in emoji) {
+                this.emoji = { name: emoji.name };
+            }
+        } else if (typeof emoji == "string" && isEmoji(emoji)) {
+            this.emoji = { name: emoji };
+        }
+
         return this;
     }
 
