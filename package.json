@@ -31,8 +31,5 @@
   "homepage": "https://angelocore.gitbook.io/discord-buttons",
   "devDependencies": {
     "@types/node": "^15.3.0"
-  },
-  "dependencies": {
-    "discord.js": "^12.5.3"
   }
 }
