@@ -7,3 +7,4 @@ declare namespace _exports {
 export = _exports;
 
 import { Client } from 'discord.js';
+
