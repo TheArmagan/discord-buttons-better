@@ -3,12 +3,12 @@ declare class MessageActionRow extends BaseMessageComponent {
     constructor(data?: {});
     setup(data: any): MessageActionRow;
     component: MessageActionRow | import("./MessageButton");
-    components: any;
-    addComponents(...components: any[]): MessageActionRow;
-    addComponent(component: any): MessageActionRow;
+    components: (import("./MessageButton"))[];
+    addComponents(...components: (import("./MessageButton"))[]): MessageActionRow;
+    addComponent(component: import("./MessageButton")): MessageActionRow;
     toJSON(): {
-        components: any;
-        type: any;
+        components: (import("./MessageButton"))[];
+        type: number;
     };
 }
 import BaseMessageComponent = require("./interfaces/BaseMessageComponent");
