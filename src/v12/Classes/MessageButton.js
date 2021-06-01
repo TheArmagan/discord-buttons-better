@@ -76,6 +76,8 @@ class MessageButton extends BaseMessageComponent {
             } else {
                 throw new TypeError("INVALID_EMOJI_OBJECT")
             }
+        } else if (!emoji) {
+            this.emoji = null;
         }
 
         return this;
