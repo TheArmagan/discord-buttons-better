@@ -35,7 +35,7 @@ class Message extends Structures.get("Message") {
                 : APIMessage.transformOptions(content, options, {
                     reply: {
                         messageReference: this,
-                        failIfNotExists: options?.failIfNotExists ?? content?.failIfNotExists ?? true,
+                        failIfNotExists: (options || {}).failIfNotExists ?? (content || {}).failIfNotExists ?? true,
                     },
                 }),
         );

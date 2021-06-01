@@ -14,7 +14,7 @@ module.exports = {
 
         if (!style) throw new TypeError('NO_BUTTON_STYLE: Please provide button style');
 
-        if (!styles?.[style]) throw new TypeError('INVALID_BUTTON_STYLE: An invalid button styles was provided');
+        if (!(styles || {}).[style]) throw new TypeError('INVALID_BUTTON_STYLE: An invalid button styles was provided');
 
         return styles[style] || style;
     },

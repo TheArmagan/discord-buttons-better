@@ -14,21 +14,17 @@ class MessageButton extends BaseMessageComponent {
 
     setup(data) {
 
-        this.style = 'style' in data ? resolveStyle(data.style) : null;
+        this.style = data.hasOwnProperty("style") ? `${data.style}` : null;
 
-        this.label = ('label' in data && data.label) ? resolveString(data.label) : undefined;
+        this.label = data.hasOwnProperty('label') ? `${data.label}` : null;
 
-        this.disabled = 'disabled' in data ? data.disabled : false;
+        this.disabled = data.hasOwnProperty('disabled') ? Boolean(data.disabled) : false;
 
-        this.emoji = 'emoji' in data ? data.emoji : undefined;
+        this.emoji = data.hasOwnProperty('emoji') ? data.emoji : null;
 
-        if ('url' in data && data.url)
-            this.url = resolveString(data.url)
-        else this.url = undefined;
-
-        if (('id' in data && data.id) || ('custom_id' in data && data.custom_id))
-            this.custom_id = data.id || data.custom_id;
-        else this.custom_id = undefined
+        this.url = data.hasOwnProperty("url") ? `${data.url}` : null;
+            
+        this.custom_id = (data || {}).id || (data || {}).custom_id || null;
 
         return this;
     }
@@ -71,10 +67,10 @@ class MessageButton extends BaseMessageComponent {
                 throw new TypeError("INVALID_EMOJI_STRING_OR_ID")
             }
         } else if (typeof emoji == "object") {
-            if (typeof emoji?.name == "string" && isEmoji(emoji.name)) {
+            if (typeof (emoji || {}).name == "string" && isEmoji(emoji.name)) {
                 this.emoji = { name: emoji.name };
-            } else if (typeof emoji?.id == "string" && emoji.id.length > 0 && numberRegex.test(emoji.id)) {
-                this.emoji = { id: emoji.id, animated: Boolean(emoji?.animated) };
+            } else if (typeof (emoji || {}).id == "string" && emoji.id.length > 0 && numberRegex.test(emoji.id)) {
+                this.emoji = { id: emoji.id, animated: Boolean((emoji || {}).animated) };
             } else {
                 throw new TypeError("INVALID_EMOJI_OBJECT")
             }
