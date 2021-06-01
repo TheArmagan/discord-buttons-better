@@ -12,7 +12,7 @@ declare class ButtonEvent {
     clicker: {
         user: User;
         member: GuildMember;
-        fetch: AsyncFunction;
+        fetch: ()=>Promise<any>;
     };
     message: Message;
     webhook: WebhookClient;
