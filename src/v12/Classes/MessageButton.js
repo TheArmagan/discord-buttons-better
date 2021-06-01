@@ -3,6 +3,8 @@ const BaseMessageComponent = require('./interfaces/BaseMessageComponent');
 const { resolveString } = require('discord.js').Util;
 const { resolveStyle, isEmoji } = require('../Util');
 
+const numberRegex = /^\d+$/;
+
 class MessageButton extends BaseMessageComponent {
 
     constructor(data = {}) {
@@ -63,15 +65,15 @@ class MessageButton extends BaseMessageComponent {
         if (typeof emoji == "string") {
             if (isEmoji(emoji)) {
                 this.emoji = { name: emoji };
-            } else if (emoji.length > 0) {
+            } else if (emoji.length > 0 && numberRegex.test(emoji)) {
                 this.emoji = { id: emoji, animated };
             } else {
-                throw new TypeError("INVALID_EMOJI_STRING")
+                throw new TypeError("INVALID_EMOJI_STRING_OR_ID")
             }
         } else if (typeof emoji == "object") {
             if (typeof emoji?.name == "string" && isEmoji(emoji.name)) {
                 this.emoji = { name: emoji.name };
-            } else if (typeof emoji?.id == "string" && emoji.id.length > 0) {
+            } else if (typeof emoji?.id == "string" && emoji.id.length > 0 && numberRegex.test(emoji.id)) {
                 this.emoji = { id: emoji.id, animated: Boolean(emoji?.animated) };
             } else {
                 throw new TypeError("INVALID_EMOJI_OBJECT")
