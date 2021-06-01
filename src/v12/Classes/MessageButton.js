@@ -58,11 +58,26 @@ class MessageButton extends BaseMessageComponent {
         return this;
     }
 
-    setEmoji(emoji) {
-        if (isEmoji(resolveString(emoji)) === true) this.emoji = { name: resolveString(emoji) }
-        else if (emoji.id) this.emoji = { id: emoji.id }
-        else if (resolveString(emoji).length > 0) this.emoji = { id: resolveString(emoji) }
-        else this.emoji = { name: null, id: null };
+    setEmoji(emoji, animated = false) {
+        
+        if (typeof emoji == "string") {
+            if (isEmoji(emoji)) {
+                this.emoji = { name: emoji };
+            } else if (emoji.length > 0) {
+                this.emoji = { id: emoji, animated };
+            } else {
+                throw new TypeError("INVALID_EMOJI_STRING")
+            }
+        } else if (typeof emoji == "object") {
+            if (typeof emoji?.name == "string" && isEmoji(emoji.name)) {
+                this.emoji = { name: emoji.name };
+            } else if (typeof emoji?.id == "string" && emoji.id.length > 0) {
+                this.emoji = { id: emoji.id, animated: Boolean(emoji?.animated) };
+            } else {
+                throw new TypeError("INVALID_EMOJI_OBJECT")
+            }
+        }
+
         return this;
     }
 

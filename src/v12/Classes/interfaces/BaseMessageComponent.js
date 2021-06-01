@@ -25,7 +25,7 @@ class BaseMessageComponent {
                 break;
             }
             default:
-                throw new TypeError('INVALID_TYPE: valid MessageComponentType');
+                throw new TypeError('INVALID_TYPE: invalid MessageComponentType');
         }
         return component;
     }
